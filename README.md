@@ -1,19 +1,23 @@
-# supermall
+1assets /img/src 
+2components 放公共组件  common放以后项目用的公共组件   content是跟业务相关的公共组件
+3views  业务组件
 
-## Project setup
-```
-npm install
-```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+1用normalize.css做css初始化，然后引入base.css的样式
 
-### Compiles and minifies for production
-```
-npm run build
-```
+2配置路径别名，就不用写../../!!!!
+vuecli3 配置文件夹别名
+在项目中创建vue.config.js文件
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
+3加入.editorconfig  (通用代码标准)
+root = true
+
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 2
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
