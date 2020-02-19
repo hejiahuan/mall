@@ -8,6 +8,8 @@
 
     <!--轮播图-->
     <home-swiper :banners="banners"></home-swiper>
+    <!--做下面的推荐--->
+      <home-recommends :recommends="recommends"/>
   </div>
 </template>
 
@@ -18,7 +20,8 @@
 
   import {GetHomeData} from "network/home.js"
 
-
+  // 推荐
+  import  HomeRecommends from './childComps/HomeRecommends'
   export default {
     name: "Home",
     data(){
@@ -29,7 +32,8 @@
     },
     components: {
       NavBar,
-      HomeSwiper
+      HomeSwiper,
+      HomeRecommends
     },
     created() {
       GetHomeData().then(res=>{
