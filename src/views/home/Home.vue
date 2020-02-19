@@ -6,18 +6,37 @@
       <div slot="right">右边</div>
     </nav-bar>
 
+    <!--轮播图-->
+    <home-swiper :banners="banners"></home-swiper>
   </div>
 </template>
 
 <script>
 
   import NavBar from "components/common/navbar/NavBar"
+  import HomeSwiper from './childComps/HomeSwiper'
+
+  import {GetHomeData} from "network/home.js"
+
 
   export default {
     name: "Home",
-    components: {
-      NavBar
+    data(){
+      return{
+        banners:[],
+        recommends:[]
+      }
     },
+    components: {
+      NavBar,
+      HomeSwiper
+    },
+    created() {
+      GetHomeData().then(res=>{
+        this.banners = res.data.data.banner.list;
+        this.recommends = res.data.data.recommend.list;
+      })
+    }
 
   }
 </script>

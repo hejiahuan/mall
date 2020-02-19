@@ -21,3 +21,5 @@ end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 
+#childComps
+是每个大页面下的组件，我们把每个页面中的每个栏目都变成组件
