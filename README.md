@@ -23,3 +23,7 @@ trim_trailing_whitespace = true
 
 #childComps
 是每个大页面下的组件，我们把每个页面中的每个栏目都变成组件
+##如果只是文字不一样，就不用搞插槽slot！！！！
+
+##tabcontrol
+tabcontrol封装，然后鼠标滚动，栏目吸顶！！思路

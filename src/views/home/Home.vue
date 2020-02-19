@@ -12,6 +12,35 @@
       <home-recommends :recommends="recommends"/>
     <!--本周流行-->
     <home-popular/>
+    <!--Tab Control-->
+    <!--简单用css属性做一个栏目吸顶position: sticky;-->
+      <tab-control :titles="titles" class="tab-control"/>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
+
+
+
+
+
+
 
   </div>
 </template>
@@ -28,19 +57,24 @@
   //本周流行，其实是一张图片，偷懒了，应该写个6个div
   import  HomePopular from "./childComps/HomePopular"
 
+  //TabControl
+  import TabControl from "components/common/tabcontrol/TabControl"
+
   export default {
     name: "Home",
     data(){
       return{
         banners:[],
-        recommends:[]
+        recommends:[],
+        titles:["哈哈哈","ddddd","dddafafasdfads"]
       }
     },
     components: {
       NavBar,
       HomeSwiper,
       HomeRecommends,
-      HomePopular
+      HomePopular,
+      TabControl
     },
     created() {
       GetHomeData().then(res=>{
@@ -53,8 +87,29 @@
 </script>
 
 <style scoped>
+  #home{
+      padding-top:44px ;
+  }
   .home-nav {
     background-color: var(--color-tint);
     color: #fff;
+
+
+    /*//固定上班购物街*/
+    position:  fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 9;
+    /*//固定上班购物街*/
+  }
+
+
+  .tab-control{
+    /*//吸顶属性*/
+    /*//必须设置top属性*/
+    /*sticky到达top值后，自动position变成flex*/
+    position: sticky;
+    top:44px
   }
 </style>
