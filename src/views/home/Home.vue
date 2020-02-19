@@ -10,6 +10,9 @@
     <home-swiper :banners="banners"></home-swiper>
     <!--做下面的推荐--->
       <home-recommends :recommends="recommends"/>
+    <!--本周流行-->
+    <home-popular/>
+
   </div>
 </template>
 
@@ -22,6 +25,9 @@
 
   // 推荐
   import  HomeRecommends from './childComps/HomeRecommends'
+  //本周流行，其实是一张图片，偷懒了，应该写个6个div
+  import  HomePopular from "./childComps/HomePopular"
+
   export default {
     name: "Home",
     data(){
@@ -33,7 +39,8 @@
     components: {
       NavBar,
       HomeSwiper,
-      HomeRecommends
+      HomeRecommends,
+      HomePopular
     },
     created() {
       GetHomeData().then(res=>{
