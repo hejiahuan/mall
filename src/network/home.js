@@ -7,3 +7,17 @@ import {request} from "./request"
 export function GetHomeData() {
     return  request({url:"/home/multidata"})
 }
+
+
+export  function GetGoodsData(type,page) {
+    return request({
+      url:"/home/goodsDatas",
+      params:{
+        type,
+        page
+      }
+
+    })
+}
+
+

@@ -9,37 +9,57 @@
     <!--轮播图-->
     <home-swiper :banners="banners"></home-swiper>
     <!--做下面的推荐--->
-      <home-recommends :recommends="recommends"/>
+    <home-recommends :recommends="recommends"/>
     <!--本周流行-->
     <home-popular/>
     <!--Tab Control-->
     <!--简单用css属性做一个栏目吸顶position: sticky;-->
-      <tab-control :titles="titles" class="tab-control"/>
+    <tab-control :titles="titles" class="tab-control"/>
     <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
     <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
     <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
     <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
     <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div><div>哈哈哈哈哈哈</div>
-
-
-
-
-
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
+    <div>哈哈哈哈哈哈</div>
 
 
   </div>
@@ -51,22 +71,30 @@
   import HomeSwiper from './childComps/HomeSwiper'
 
   import {GetHomeData} from "network/home.js"
+  import {GetGoodsData} from "network/home.js"
+  import {Test} from "network/home.js"
 
   // 推荐
-  import  HomeRecommends from './childComps/HomeRecommends'
+  import HomeRecommends from './childComps/HomeRecommends'
   //本周流行，其实是一张图片，偷懒了，应该写个6个div
-  import  HomePopular from "./childComps/HomePopular"
+  import HomePopular from "./childComps/HomePopular"
 
   //TabControl
   import TabControl from "components/common/tabcontrol/TabControl"
 
   export default {
     name: "Home",
-    data(){
-      return{
-        banners:[],
-        recommends:[],
-        titles:["哈哈哈","ddddd","dddafafasdfads"]
+    data() {
+      return {
+        banners: [],
+        recommends: [],
+        titles: ["哈哈哈", "ddddd", "dddafafasdfads"],
+        goods: {
+          "pop": {page: 0, list: []},
+          "news": {page: 0, list: []},
+          "sell": {page: 0, list: []}
+
+        }
       }
     },
     components: {
@@ -77,26 +105,41 @@
       TabControl
     },
     created() {
-      GetHomeData().then(res=>{
-        this.banners = res.data.data.banner.list;
-        this.recommends = res.data.data.recommend.list;
-      })
+      this.GetHomeData()
+      this.GetGoodsData()
+
+
+    }
+    , methods: {
+      GetHomeData() {
+        GetHomeData().then(res => {
+          this.banners = res.data.data.banner.list;
+          this.recommends = res.data.data.recommend.list;
+        })
+      },
+      GetGoodsData() {
+        //请求goods数据
+        GetGoodsData("pop", 1).then(res => {
+          console.log(res);
+        })
+      }
     }
 
   }
 </script>
 
 <style scoped>
-  #home{
-      padding-top:44px ;
+  #home {
+    padding-top: 44px;
   }
+
   .home-nav {
     background-color: var(--color-tint);
     color: #fff;
 
 
     /*//固定上班购物街*/
-    position:  fixed;
+    position: fixed;
     left: 0;
     right: 0;
     top: 0;
@@ -105,11 +148,11 @@
   }
 
 
-  .tab-control{
+  .tab-control {
     /*//吸顶属性*/
     /*//必须设置top属性*/
     /*sticky到达top值后，自动position变成flex*/
     position: sticky;
-    top:44px
+    top: 44px
   }
 </style>

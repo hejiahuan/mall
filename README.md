@@ -27,3 +27,4 @@ trim_trailing_whitespace = true
 
 ##tabcontrol
 tabcontrol封装，然后鼠标滚动，栏目吸顶！！思路
+##商品列表tabcontrol下面
