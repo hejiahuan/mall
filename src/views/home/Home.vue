@@ -92,7 +92,7 @@
         goods: {
           "pop": {page: 0, list: []},
           "news": {page: 0, list: []},
-          "sell": {page: 0, list: []}
+          "sells": {page: 0, list: []}
 
         }
       }
@@ -106,7 +106,12 @@
     },
     created() {
       this.GetHomeData()
-      this.GetGoodsData()
+
+      //请求tab 下商品的数据
+      this.GetGoodsData("pop");
+      this.GetGoodsData("news");
+      this.GetGoodsData("sells");
+
 
 
     }
@@ -117,10 +122,15 @@
           this.recommends = res.data.data.recommend.list;
         })
       },
-      GetGoodsData() {
+      GetGoodsData(type) {
+        //初始page=0,为了复用！！！
         //请求goods数据
-        GetGoodsData("pop", 1).then(res => {
-          console.log(res);
+        const page=this.goods[type].page+1
+        GetGoodsData(type,page).then(res => {
+          // 可变参数,语义就是把...后边的数组自己解析，然后放入list中
+          this.goods[type].list.push(...res.data.list);
+          //然后把page+1
+          this.goods[type].page+=1
         })
       }
     }
