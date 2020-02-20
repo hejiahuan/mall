@@ -1,3 +1,4 @@
+
 <template>
   <div id="home">
     <nav-bar class="home-nav">
@@ -15,6 +16,10 @@
     <!--Tab Control-->
     <!--简单用css属性做一个栏目吸顶position: sticky;-->
     <tab-control :titles="titles" class="tab-control"/>
+
+    <!--商品数据展示-->
+    <good-list :goods="goods['pop'].list"/>
+
     <div>哈哈哈哈哈哈</div>
     <div>哈哈哈哈哈哈</div>
     <div>哈哈哈哈哈哈</div>
@@ -82,13 +87,16 @@
   //TabControl
   import TabControl from "components/common/tabcontrol/TabControl"
 
+  //商品数据展示
+  import GoodList from "components/content/goods/GoodsList.vue"
+
   export default {
     name: "Home",
     data() {
       return {
         banners: [],
         recommends: [],
-        titles: ["哈哈哈", "ddddd", "dddafafasdfads"],
+        titles: ["流行", "新闻", "特卖"],
         goods: {
           "pop": {page: 0, list: []},
           "news": {page: 0, list: []},
@@ -102,7 +110,8 @@
       HomeSwiper,
       HomeRecommends,
       HomePopular,
-      TabControl
+      TabControl,
+      GoodList
     },
     created() {
       this.GetHomeData()
