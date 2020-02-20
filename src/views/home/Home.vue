@@ -1,4 +1,3 @@
-
 <template>
   <div id="home">
     <nav-bar class="home-nav">
@@ -15,10 +14,15 @@
     <home-popular/>
     <!--Tab Control-->
     <!--简单用css属性做一个栏目吸顶position: sticky;-->
-    <tab-control :titles="titles" class="tab-control"/>
+    <!--tabControl在内部点击，然后将内部点击事件传入外部home-->
+    <tab-control :titles="titles" class="tab-control" @tabClick="tabClick"/>
 
     <!--商品数据展示-->
-    <good-list :goods="goods['pop'].list"/>
+    <!--觉得goods[currentType]太长了计算属性一下-->
+    <!--<good-list :goods="goods[currentType].list"/>-->
+    <!--商品数据展示-->
+    <good-list :goods="showGoods"/>
+
 
     <div>哈哈哈哈哈哈</div>
     <div>哈哈哈哈哈哈</div>
@@ -102,7 +106,15 @@
           "news": {page: 0, list: []},
           "sells": {page: 0, list: []}
 
-        }
+        },
+        currentType: "pop"
+      }
+
+    },
+    computed:{
+      //觉得goods[currentType].list太长了用计算属性做一下
+      showGoods(){
+          return this.goods[this.currentType].list
       }
     },
     components: {
@@ -122,9 +134,30 @@
       this.GetGoodsData("sells");
 
 
-
     }
     , methods: {
+      /***
+       * 事件监听的方法
+       */
+      tabClick(index) {
+        switch (index) {
+          case 0:
+            this.currentType = "pop"
+            break
+          case 1:
+            this.currentType = "news"
+            break
+          case 2:
+            this.currentType = "sells"
+            break
+        }
+      },
+
+
+      /**
+       * 网络请求
+       * @constructor
+       */
       GetHomeData() {
         GetHomeData().then(res => {
           this.banners = res.data.data.banner.list;
@@ -134,12 +167,12 @@
       GetGoodsData(type) {
         //初始page=0,为了复用！！！
         //请求goods数据
-        const page=this.goods[type].page+1
-        GetGoodsData(type,page).then(res => {
+        const page = this.goods[type].page + 1
+        GetGoodsData(type, page).then(res => {
           // 可变参数,语义就是把...后边的数组自己解析，然后放入list中
           this.goods[type].list.push(...res.data.list);
           //然后把page+1
-          this.goods[type].page+=1
+          this.goods[type].page += 1
         })
       }
     }
