@@ -29,3 +29,14 @@ trim_trailing_whitespace = true
 tabcontrol封装，然后鼠标滚动，栏目吸顶！！思路
 ##商品列表tabcontrol下面
 ##首页数据请求和保存在Goods下面
+
+##安装Better-scroll用来做局部滚动
+代码在github中
+npm install better-scroll --save
+
+用原生css 做局部滚动！！！！！
+overflow-y: scroll;
+
+但是这个有一个缺点，手机端非常卡顿
+
+better-scroll必须放在mounted中，mounted表示模板,el创建完毕了！！不能用create,create那个时候什么都没有创建，找不到better-scroll(dom)中的dom
