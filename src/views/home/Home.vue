@@ -8,7 +8,8 @@
 
     <!--把除了上边的home-nav其他都加入scroll中，这些就可以局部滚动了-->
 
-    <Scroll class="content">
+    <!--用ref把组件加入$refs中，这样就可以拿到scroll组件对象了！！！-->
+    <Scroll class="content" ref="scroll">
       <!--轮播图-->
       <home-swiper :banners="banners"></home-swiper>
       <!--做下面的推荐--->
@@ -106,7 +107,10 @@
     , methods: {
       //回到首页！！！！
       backClick(){
-          alert("dddd")
+          //用ref加入scroll组件对象！！
+       // this.$refs.scroll.scroll.scrollTo(0,0,500)
+        //下面这个只是做了封装！！！
+        this.$refs.scroll.scrollTo(0,0)
       },
 
 

@@ -29,6 +29,12 @@
         this.scroll=new BScroll(this.$refs.wrapper,{
 
         })
+    },
+    methods:{
+      //自己封装了一个scrollTo方法，其实用这个  this.$refs.scroll.scroll.scrollTo(0,0,500)就可以
+      scrollTo(x,y,time=300){
+          this.scroll.scrollTo(x,y,time);
+      }
     }
   }
 </script>
