@@ -59,7 +59,11 @@ scroll.vue
     /*margin-top: 44px;*/
   }
 2用height: calc(100% - 93px)
-
+.content {
+    height: calc(100% - 93px);
+    overflow: hidden;
+    margin-top: 44px;
+  }
 ##回到首页的封装
 思路
 1就是先放一张图片
@@ -68,3 +72,20 @@ scrollTo(0,0,500ms)方法回到指定地方
   this.$refs.scroll.scroll.scrollTo(0,0,500)
 ##在用回到首页的时候，遇到一个小问题，就是要想在组件上监听事件必须用@click.native才可以监听
 <!--不用放到Scroll,不需要跟他滚,组件是不能直接监听点击的，必须加native才可以-->
+
+#回到首页默认不显示，和显示
+达到临界值显示，小于临界值隐藏，必须随意监听滚动
+需要实时监听滚到哪了
+//2监听滚动的位置
+      this.scroll.on("scroll",(position)=>{
+        //谁需要要位置我们把位置传给Home父组件
+        this.$emit("scroll",position)
+}
+
+ //监听位置postition,这个方法为了做topBack的隐藏和消失
+      // 因为你要什么时候隐藏和消失，必须得知道位置
+      contentScroll(postion){
+        // 这个是有scroll传入给home父组件的
+        //如果postion大于1000，显示出来topBack
+       this.isShow= (-postion.y)>1000
+      },

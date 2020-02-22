@@ -9,7 +9,8 @@
     <!--把除了上边的home-nav其他都加入scroll中，这些就可以局部滚动了-->
 
     <!--用ref把组件加入$refs中，这样就可以拿到scroll组件对象了！！！-->
-    <Scroll class="content" ref="scroll">
+    <!--probe-type为啥是3那是因为我们传个3，不是所有功能需要实时监听，不传就是不监听-->
+    <Scroll class="content" ref="scroll" :probe-type="3" @scroll="contentScroll">
       <!--轮播图-->
       <home-swiper :banners="banners"></home-swiper>
       <!--做下面的推荐--->
@@ -29,7 +30,7 @@
     </Scroll>
 
     <!--不用放到Scroll,不需要跟他滚,组件是不能直接监听点击的，必须加native才可以-->
-    <back-top  @click.native="backClick"/>
+    <back-top @click.native="backClick" v-show="isShow"/>
 
 
   </div>
@@ -74,7 +75,8 @@
           "sells": {page: 0, list: []}
 
         },
-        currentType: "pop"
+        currentType: "pop",
+        isShow:false
       }
 
     },
@@ -106,13 +108,20 @@
     }
     , methods: {
       //回到首页！！！！
-      backClick(){
-          //用ref加入scroll组件对象！！
-       // this.$refs.scroll.scroll.scrollTo(0,0,500)
+      backClick() {
+        //用ref加入scroll组件对象！！
+        // this.$refs.scroll.scroll.scrollTo(0,0,500)
         //下面这个只是做了封装！！！
-        this.$refs.scroll.scrollTo(0,0)
+        this.$refs.scroll.scrollTo(0, 0)
       },
 
+      //监听位置postition,这个方法为了做topBack的隐藏和消失
+      // 因为你要什么时候隐藏和消失，必须得知道位置
+      contentScroll(postion){
+        // 这个是有scroll传入给home父组件的
+        //如果postion大于1000，显示出来topBack
+       this.isShow= (-postion.y)>1000
+      },
 
       /***
        * 事件监听的方法
@@ -201,8 +210,12 @@
     bottom: 49px;
     left: 0;
     right: 0;
+  }
+
+  /*.content {*/
     /*height: calc(100% - 93px);*/
     /*overflow: hidden;*/
     /*margin-top: 44px;*/
-  }
+  /*}*/
+
 </style>
