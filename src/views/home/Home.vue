@@ -6,69 +6,28 @@
       <div slot="right">右边</div>
     </nav-bar>
 
-    <!--轮播图-->
-    <home-swiper :banners="banners"></home-swiper>
-    <!--做下面的推荐--->
-    <home-recommends :recommends="recommends"/>
-    <!--本周流行-->
-    <home-popular/>
-    <!--Tab Control-->
-    <!--简单用css属性做一个栏目吸顶position: sticky;-->
-    <!--tabControl在内部点击，然后将内部点击事件传入外部home-->
-    <tab-control :titles="titles" class="tab-control" @tabClick="tabClick"/>
+    <!--把除了上边的home-nav其他都加入scroll中，这些就可以局部滚动了-->
 
-    <!--商品数据展示-->
-    <!--觉得goods[currentType]太长了计算属性一下-->
-    <!--<good-list :goods="goods[currentType].list"/>-->
-    <!--商品数据展示-->
-    <good-list :goods="showGoods"/>
+    <Scroll class="content">
+      <!--轮播图-->
+      <home-swiper :banners="banners"></home-swiper>
+      <!--做下面的推荐--->
+      <home-recommends :recommends="recommends"/>
+      <!--本周流行-->
+      <home-popular/>
+      <!--Tab Control-->
+      <!--简单用css属性做一个栏目吸顶position: sticky;-->
+      <!--tabControl在内部点击，然后将内部点击事件传入外部home-->
+      <tab-control :titles="titles" class="tab-control" @tabClick="tabClick"/>
+
+      <!--商品数据展示-->
+      <!--觉得goods[currentType]太长了计算属性一下-->
+      <!--<good-list :goods="goods[currentType].list"/>-->
+      <!--商品数据展示-->
+      <good-list :goods="showGoods"/>
+    </Scroll>
 
 
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
-    <div>哈哈哈哈哈哈</div>
 
 
   </div>
@@ -94,6 +53,9 @@
   //商品数据展示
   import GoodList from "components/content/goods/GoodsList.vue"
 
+  //引入封装的scroll组件以达到解耦合
+  import Scroll from "components/common/scroll/Scroll"
+
   export default {
     name: "Home",
     data() {
@@ -111,10 +73,10 @@
       }
 
     },
-    computed:{
+    computed: {
       //觉得goods[currentType].list太长了用计算属性做一下
-      showGoods(){
-          return this.goods[this.currentType].list
+      showGoods() {
+        return this.goods[this.currentType].list
       }
     },
     components: {
@@ -123,7 +85,8 @@
       HomeRecommends,
       HomePopular,
       TabControl,
-      GoodList
+      GoodList,
+      Scroll
     },
     created() {
       this.GetHomeData()
@@ -182,7 +145,12 @@
 
 <style scoped>
   #home {
+    /*//viewport height ---->当前视口高度*/
+    /*当前视口高度100%*/
+    height: 100vh;
+
     padding-top: 44px;
+    position: relative;
   }
 
   .home-nav {
@@ -206,5 +174,20 @@
     /*sticky到达top值后，自动position变成flex*/
     position: sticky;
     top: 44px
+  }
+
+
+  /*//这里的content不会影响到scroll中的.content因为有styple=scoped,作用域*/
+  .content {
+    /*height: 300px;*/
+    overflow: hidden;
+    position: absolute;
+    top:44px;
+    bottom: 49px;
+    left: 0;
+    right: 0;
+    /*height: calc(100% - 93px);*/
+    /*overflow: hidden;*/
+    /*margin-top: 44px;*/
   }
 </style>

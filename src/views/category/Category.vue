@@ -64,7 +64,17 @@
     //better-scroll还有底部弹簧效果
     mounted(){
         let bscrollDom = this.$refs.wrapper;
-        this.aBScroll = new BScroll(bscrollDom,{})
+        this.aBScroll = new BScroll(bscrollDom,{
+          probeType:3,
+          pullUpLoad:true
+        })
+
+        this.aBScroll.on("scroll",position=>{
+          console.log(position);
+        })
+      this.aBScroll.on("pullingUp",()=>{
+        alert(`上拉加载更多`);
+      })
     }
   }
 </script>

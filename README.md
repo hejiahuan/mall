@@ -40,3 +40,22 @@ overflow-y: scroll;
 但是这个有一个缺点，手机端非常卡顿
 
 better-scroll必须放在mounted中，mounted表示模板,el创建完毕了！！不能用create,create那个时候什么都没有创建，找不到better-scroll(dom)中的dom
+##必须封装Better-scroll解耦合，不然bettr-scroll太依赖了！！
+scroll.vue
+
+##如果确定中间高度
+[!55.jpg](55.JPG)
+1用定位
+.content {
+    /*height: 300px;*/
+    overflow: hidden;
+    position: absolute;
+    top:44px; 上边确定
+    bottom: 49px; 下边确定
+    left: 0; 左边为0
+    right: 0; 右边为0
+    /*height: calc(100% - 93px);*/
+    /*overflow: hidden;*/
+    /*margin-top: 44px;*/
+  }
+2用height: calc(100% - 93px)
