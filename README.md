@@ -89,3 +89,10 @@ scrollTo(0,0,500ms)方法回到指定地方
         //如果postion大于1000，显示出来topBack
        this.isShow= (-postion.y)>1000
       },
+##上拉加载更多
+先监听事件打开pullingUp属性，然后回调pullingUp方法！！！！上拉加载完成一次后，一定要
+//这里一定要注意加载一次后一定要关闭加载更多不然加载一次再加载加载不了了
+ //页面改变一次要刷新一次！！！不然有bug
+        this.scroll.refresh()
+        //页面加载一次要结束一次，否自只能加载一次
+        this.scroll.finishPullUp()

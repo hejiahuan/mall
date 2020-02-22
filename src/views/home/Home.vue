@@ -10,7 +10,7 @@
 
     <!--用ref把组件加入$refs中，这样就可以拿到scroll组件对象了！！！-->
     <!--probe-type为啥是3那是因为我们传个3，不是所有功能需要实时监听，不传就是不监听-->
-    <Scroll class="content" ref="scroll" :probe-type="3" @scroll="contentScroll">
+    <Scroll class="content" ref="scroll" :probe-type="3" @scroll="contentScroll" :pull-up-load="true" @pullingUp="loadMore">
       <!--轮播图-->
       <home-swiper :banners="banners"></home-swiper>
       <!--做下面的推荐--->
@@ -107,6 +107,12 @@
 
     }
     , methods: {
+      //下拉加载更多
+      loadMore(){
+        this.GetGoodsData(this.currentType)
+      },
+
+
       //回到首页！！！！
       backClick() {
         //用ref加入scroll组件对象！！
@@ -160,6 +166,12 @@
           this.goods[type].list.push(...res.data.list);
           //然后把page+1
           this.goods[type].page += 1
+
+
+          //这里一定要注意加载一次后一定要关闭加载更多不然加载一次再加载加载不了了
+          this.$refs.scroll.finishPullUp()
+
+
         })
       }
     }
