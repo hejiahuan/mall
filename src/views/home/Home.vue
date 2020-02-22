@@ -27,7 +27,8 @@
       <good-list :goods="showGoods"/>
     </Scroll>
 
-
+    <!--不用放到Scroll,不需要跟他滚,组件是不能直接监听点击的，必须加native才可以-->
+    <back-top  @click.native="backClick"/>
 
 
   </div>
@@ -56,6 +57,9 @@
   //引入封装的scroll组件以达到解耦合
   import Scroll from "components/common/scroll/Scroll"
 
+  //回到首页
+  import BackTop from "components/common/backtop/BackTop"
+
   export default {
     name: "Home",
     data() {
@@ -80,6 +84,7 @@
       }
     },
     components: {
+      BackTop,
       NavBar,
       HomeSwiper,
       HomeRecommends,
@@ -99,6 +104,12 @@
 
     }
     , methods: {
+      //回到首页！！！！
+      backClick(){
+          alert("dddd")
+      },
+
+
       /***
        * 事件监听的方法
        */
@@ -182,7 +193,7 @@
     /*height: 300px;*/
     overflow: hidden;
     position: absolute;
-    top:44px;
+    top: 44px;
     bottom: 49px;
     left: 0;
     right: 0;

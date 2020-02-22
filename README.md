@@ -59,3 +59,11 @@ scroll.vue
     /*margin-top: 44px;*/
   }
 2用height: calc(100% - 93px)
+
+##回到首页的封装
+思路
+1就是先放一张图片
+2然后得到better-scroll这个对象，然后用better-scroll这个对象的一个方法就可以回去
+scrollTo()方法回到指定地方
+##在用回到首页的时候，遇到一个小问题，就是要想在组件上监听事件必须用@click.native才可以监听
+<!--不用放到Scroll,不需要跟他滚,组件是不能直接监听点击的，必须加native才可以-->
