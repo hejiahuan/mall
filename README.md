@@ -193,3 +193,15 @@ Google了一番，除了把fixed元素放出来，没有什么好办法。有的
   }
 
 当better-scroll中有fixed属性，当better-scroll用了transform(肯定用了，偏移本质就是transform),那么better-scroll中的fixed他的父元素已经不是better-scroll了，而是bscroll的父元素，此时我们的父元素是home,他就会跑到顶部被遮盖
+
+###解决方法
+/*解决在better-scroll里边吸顶有问题的方法，就是把Tabcontrol从better-scroll再拿出来一个*/
+
+  .tabControlTop{
+    /*用相对定位他还会保持原来的位置*/
+    position: relative;
+    z-index: 9;
+    background-color: #fff;
+  }
+  
+ <tab-control :titles="titles" class="tabControlTop" @tabClick="tabClick" ref="tabControl" v-show="isTabFixed"/>

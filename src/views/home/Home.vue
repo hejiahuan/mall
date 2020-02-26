@@ -5,6 +5,8 @@
       <div slot="center">购物街</div>
       <div slot="right">右边</div>
     </nav-bar>
+    <tab-control :titles="titles" class="tabControlTop" @tabClick="tabClick" ref="tabControl" v-show="isTabFixed"/>
+
     <!--把除了上边的home-nav其他都加入scroll中，这些就可以局部滚动了-->
 
     <!--用ref把组件加入$refs中，这样就可以拿到scroll组件对象了！！！-->
@@ -20,7 +22,7 @@
       <!--Tab Control-->
       <!--简单用css属性做一个栏目吸顶position: sticky;-->
       <!--tabControl在内部点击，然后将内部点击事件传入外部home-->
-      <tab-control :titles="titles" class="tab-control" @tabClick="tabClick" ref="tabControl" :class="{fixed:isTabFixed}"/>
+      <tab-control :titles="titles" @tabClick="tabClick" ref="tabControl"/>
 
       <!--商品数据展示-->
       <!--觉得goods[currentType]太长了计算属性一下-->
@@ -242,6 +244,14 @@
 </script>
 
 <style scoped>
+  /*解决在better-scroll里边吸顶有问题的方法，就是把Tabcontrol从better-scroll再拿出来一个*/
+
+  .tabControlTop{
+    /*用相对定位他还会保持原来的位置*/
+    position: relative;
+    z-index: 9;
+    background-color: #fff;
+  }
   #home {
     /*//viewport height ---->当前视口高度*/
     /*当前视口高度100%*/
