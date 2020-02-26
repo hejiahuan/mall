@@ -85,7 +85,8 @@
         //获取tabControl的
         tabOffsetTop:0,
         //做吸顶用的
-        isTabFixed:false
+        isTabFixed:false,
+        saveY:0
       }
 
     },
@@ -134,6 +135,25 @@
 
 
     },
+
+    destroyed(){
+      console.log("home摧毁了");
+    },
+    // 活跃的时候
+    activated(){
+      //注意这里的y值是负数不是正数！！！！
+      this.$refs.scroll.scrollTo(0,this.saveY,0)
+      this.$refs.scroll.refresh()
+      console.log("进入页面");
+    },
+    // 离开的时候
+    deactivated(){
+      this.saveY=this.$refs.scroll.getScrollY()
+      console.log("离开页面");
+    },
+
+
+
     methods: {
       // 不能再create()拿tabControl
       //拿到tabControl对象

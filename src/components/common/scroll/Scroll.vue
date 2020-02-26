@@ -85,8 +85,12 @@
 
         console.log("打印测试防抖动");
         this.scroll&&this.scroll.refresh&&this.scroll.refresh()
-      }
+      },
 
+
+      getScrollY(){
+        return this.scroll ? this.scroll.y:0
+      }
     }
   }
 </script>

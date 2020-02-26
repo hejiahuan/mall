@@ -205,3 +205,28 @@ Google了一番，除了把fixed元素放出来，没有什么好办法。有的
   }
   
  <tab-control :titles="titles" class="tabControlTop" @tabClick="tabClick" ref="tabControl" v-show="isTabFixed"/>
+###用keep-alive保持状态
+当你点击其他栏目的时候，在点击hone的位不变
+<template>
+  <div id="app">
+    <keep-alive>
+      <router-view/>
+    </keep-alive>
+    <main-tab-bar/>
+
+  </div>
+</template>
+
+bug:加了以后，会保持到原来的状态，但是再滑动home的页面，再点击其他栏目，再点击home,又重新刷新了！！！
+解决思路：
+离开时，保持一个位置信息savey
+进来时，将位置设置为原来的savey信息就可以了
+如何监听离开和活跃呢?vue周期函数
+//活跃
+activeated(){
+  y值是付的一定是付的记住！！！！！
+},
+//离开
+deactivated(){
+
+}
