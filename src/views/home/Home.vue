@@ -63,6 +63,9 @@
   //回到首页
   import BackTop from "components/common/backtop/BackTop"
 
+  //导入防抖函数
+  import {debounce} from "components/common/utils"
+
   export default {
     name: "Home",
     data() {
@@ -112,7 +115,7 @@
       //我们需要在main.js中Vue.prototype.$bus=new Vue()就可以
 
       //防抖动函数
-      const refresh = this.debounce(this.$refs.scroll.refresh, 500)
+      const refresh = debounce(this.$refs.scroll.refresh, 500)
 
       this.$bus.$on("itemImageLoad", () => {
 
@@ -130,18 +133,19 @@
       // const refresh=debounce(this.$refs.scroll.refresh,500)
       // refresh()====>相当于执行了return function(...args)函数
 
-      debounce(func, delay) {
-        let timer = null
-        return function (...args) {
-          if (timer) clearTimeout(timer)
-          timer = setTimeout(() => {
-            //执行
-            func.apply(this, args)
-          }, delay)
-
-        }
-      }
-      ,
+      // 这里把防抖函数封装到util.js中
+      // debounce(func, delay) {
+      //   let timer = null
+      //   return function (...args) {
+      //     if (timer) clearTimeout(timer)
+      //     timer = setTimeout(() => {
+      //       //执行
+      //       func.apply(this, args)
+      //     }, delay)
+      //
+      //   }
+      // }
+      //,
 
       //下拉加载更多,这种方式是有bug的
       loadMore() {
