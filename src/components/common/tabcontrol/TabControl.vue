@@ -40,6 +40,7 @@
     display: flex;
     text-align: center;
     font-size: 15px;
+    border: solid 1px red;
   }
 
   .tab-control-item {

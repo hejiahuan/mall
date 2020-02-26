@@ -5,7 +5,6 @@
       <div slot="center">购物街</div>
       <div slot="right">右边</div>
     </nav-bar>
-
     <!--把除了上边的home-nav其他都加入scroll中，这些就可以局部滚动了-->
 
     <!--用ref把组件加入$refs中，这样就可以拿到scroll组件对象了！！！-->
@@ -13,7 +12,7 @@
     <Scroll class="content" ref="scroll" :probe-type="3" @scroll="contentScroll" :pull-up-load="true"
             @pullingUp="loadMore">
       <!--轮播图-->
-      <home-swiper :banners="banners"></home-swiper>
+      <home-swiper :banners="banners" @swiperImageLoad="swiperImageLoad"/>
       <!--做下面的推荐--->
       <home-recommends :recommends="recommends"/>
       <!--本周流行-->
@@ -21,7 +20,7 @@
       <!--Tab Control-->
       <!--简单用css属性做一个栏目吸顶position: sticky;-->
       <!--tabControl在内部点击，然后将内部点击事件传入外部home-->
-      <tab-control :titles="titles" class="tab-control" @tabClick="tabClick"/>
+      <tab-control :titles="titles" class="tab-control" @tabClick="tabClick" ref="tabControl" :class="{fixed:isTabFixed}"/>
 
       <!--商品数据展示-->
       <!--觉得goods[currentType]太长了计算属性一下-->
@@ -80,7 +79,11 @@
 
         },
         currentType: "pop",
-        isShow: false
+        isShow: false,
+        //获取tabControl的
+        tabOffsetTop:0,
+        //做吸顶用的
+        isTabFixed:false
       }
 
     },
@@ -108,8 +111,11 @@
       this.GetGoodsData("news");
       this.GetGoodsData("sells");
 
+
+
     },
     mounted() {
+
       //监听从goodsListItem.vue中发送的事件！！！！用于修改scroll下拉加载的bug
       //默认情况下$bus是没有的！！！是空的，
       //我们需要在main.js中Vue.prototype.$bus=new Vue()就可以
@@ -122,8 +128,22 @@
         refresh()
 
       })
+
+
+
     },
     methods: {
+      // 不能再create()拿tabControl
+      //拿到tabControl对象
+      //所有的组件都有一个属性$el,Vue 实例使用的根 DOM 元素。
+      //但是我们这个offsettop如果上边的图片没有加载完，他的offsetTop是有变化的！！！所以我们思路是
+      //监听轮播图是否加载完，然后在计算offsetTop
+   // 监听图片是否加载完成并且得到正确的offsetTop
+      swiperImageLoad(){
+        this.tabOffsetTop=this.$refs.tabControl.$el.offsetTop
+      },
+
+
       // 封装一个防抖函数
       // 原理就是定时器
       //过程:
@@ -167,6 +187,9 @@
         // 这个是有scroll传入给home父组件的
         //如果postion大于1000，显示出来topBack
         this.isShow = (-postion.y) > 1000
+        // 2TabControl是否吸顶,大于就应该吸顶，然后动态绑定class
+        this.isTabFixed=(-postion.y)>this.tabOffsetTop
+
       },
 
       /***
@@ -224,32 +247,23 @@
     /*当前视口高度100%*/
     height: 100vh;
 
-    padding-top: 44px;
     position: relative;
   }
-
+  /*在用better-scroll中，顶部要fixed导航的导航栏可以不用设置fixed属性，他自动fixed.*/
+  /*我们取消了homenav的fixed布局，照样适用fixed*/
   .home-nav {
     background-color: var(--color-tint);
     color: #fff;
 
-
-    /*//固定上班购物街*/
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    z-index: 9;
+    /*固定上班购物街*/
+    /*position: fixed;*/
+    /*left: 0;*/
+    /*right: 0;*/
+    /*top: 0;*/
+    /*z-index: 9;*/
     /*//固定上班购物街*/
   }
 
-
-  .tab-control {
-    /*//吸顶属性*/
-    /*//必须设置top属性*/
-    /*sticky到达top值后，自动position变成flex*/
-    position: sticky;
-    top: 44px
-  }
 
 
   /*//这里的content不会影响到scroll中的.content因为有styple=scoped,作用域*/
@@ -268,5 +282,11 @@
   /*overflow: hidden;*/
   /*margin-top: 44px;*/
   /*}*/
+  .fixed{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 44px;
 
+  }
 </style>

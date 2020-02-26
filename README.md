@@ -27,6 +27,15 @@ trim_trailing_whitespace = true
 
 ##tabcontrol
 tabcontrol封装，然后鼠标滚动，栏目吸顶！！思路
+
+  .tab-control {
+    /*//吸顶属性*/
+    /*//必须设置top属性*/
+    /*sticky到达top值后，自动position变成flex*/
+    position: sticky;
+    top: 44px
+  }
+
 ##商品列表tabcontrol下面
 ##首页数据请求和保存在Goods下面
 
@@ -121,3 +130,66 @@ axxx一个单词，如果这个人写字慢,a-x,x-x-x那么对于服务器来说
 而项目中：我们一次要刷新10次那么我们不是每次都要刷新，而是等到加载完10次后在刷新！
 //函数有防抖和节流！！！
 防抖debounce/节流throttle
+
+
+###自己实现吸顶
+之前用css做吸顶，现在不起效果了
+这种实际情况下也不会用css做吸顶
+  .tab-control {
+    /*//吸顶属性*/
+    /*//必须设置top属性*/
+    /*sticky到达top值后，自动position变成flex*/
+    position: sticky;
+    top: 44px
+  }
+吸顶思路：
+当往上滚的时候我们要知道
+![22.jgp](22.JPG)
+就是滚动吸顶是否大于这段距离,大于改动布局flex
+1获取到taboffsetTop
+// 不能再create()拿tabControl
+      //拿到tabControl对象
+      //所有的组件都有一个属性$el,Vue 实例使用的根 DOM 元素。
+      //但是我们这个offsettop如果上边的图片没有加载完，他的offsetTop是有变化的！！！所以我们思路是
+      //监听轮播图是否加载完，然后在计算offsetTop
+      this.tabOffsetTop=this.$refs.tabControl.$el.offsetTop
+      console.log(this.tabOffsetTop);
+
+2监听滚动的位置和offsetTop做对比
+contentScroll()之前做backTop时候已经做了
+/监听位置postition,这个方法为了做topBack的隐藏和消失
+      // 因为你要什么时候隐藏和消失，必须得知道位置
+      contentScroll(postion) {
+        // 这个是有scroll传入给home父组件的
+        //如果postion大于1000，显示出来topBack
+        this.isShow = (-postion.y) > 1000
+        // 2TabControl是否吸顶,大于就应该吸顶，然后动态绑定class
+        this.isTabFixed=(-postion.y)>this.tabOffsetTop
+
+      },
+<tab-control :titles="titles" class="tab-control" @tabClick="tabClick" ref="tabControl" :class="{fixed:isTabFixed}"/>
+
+但是这样做还是不能完成吸顶的效果，因为better-scroll---只要把要Fixed的东西放入better-scroll中，我们better-scroll的滚动是用transform的translate来进行偏移
+4.position: fixed失效！
+bscroll的滚动是用transform的translate来进行偏移，但是父元素设置了transform，所有子元素的position: fixed都不再相对于视口，而是相对于这个transform父元素！这不是什么bug，而是规范中规定。一直以为fixed定位霸道至极，没想到transform可以改变它的定位，学到了。
+
+官方解除就是不要把要fixed的元素放入bscroll中
+这样的话，bscroll容器内的fixed定位元素就全乱套了。
+Google了一番，除了把fixed元素放出来，没有什么好办法。有的人也说了：如果一个元素是fixed定位，它就不应该被其他元素包裹，直接放到根元素下。
+
+总结：在用better-scroll中，顶部要fixed导航的导航栏可以不用设置fixed属性，他自动fixed.
+我们取消了homenav的fixed布局，照样适用fixed
+.home-nav {
+    background-color: var(--color-tint);
+    color: #fff;
+
+    /*固定上班购物街*/
+    /*position: fixed;*/
+    /*left: 0;*/
+    /*right: 0;*/
+    /*top: 0;*/
+    /*z-index: 9;*/
+    /*//固定上班购物街*/
+  }
+
+当better-scroll中有fixed属性，当better-scroll用了transform(肯定用了，偏移本质就是transform),那么better-scroll中的fixed他的父元素已经不是better-scroll了，而是bscroll的父元素，此时我们的父元素是home,他就会跑到顶部被遮盖
