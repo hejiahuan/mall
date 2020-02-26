@@ -69,17 +69,22 @@
     methods: {
       //自己封装了一个scrollTo方法，其实用这个  this.$refs.scroll.scroll.scrollTo(0,0,500)就可以
       scrollTo(x, y, time = 300) {
-        this.scroll.scrollTo(x, y, time);
+        //这么写是为了防bug
+       this.scroll&&this.scroll.scrollTo&&this.scroll.scrollTo(x, y, time);
       },
       //加载完一次必须执行finishPullUp方法不然再加载是加载不数据的
       // 可以配置离（threshold）来决定开始加载的时机。当上拉加载数据加载完毕后，需要执行 finishPullUp 方法
       //这里封装一下这个方法，为了解耦合，也可以直接调用
       finishPullUp(){
-        //页面改变一次要刷新一次！！！不然有bug
-        this.scroll.refresh()
         //页面加载一次要结束一次，否自只能加载一次
         this.scroll.finishPullUp()
+      },
+
+      refresh(){
+        //这么写为了防bug
+        this.scroll&&this.scroll.refresh&&this.scroll.refresh()
       }
+
     }
   }
 </script>

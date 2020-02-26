@@ -1,6 +1,6 @@
 <template>
   <div class="goods-item">
-    <img :src="goodsItem.image" alt="">
+    <img :src="goodsItem.image" alt="" @load="imgLoad">
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
       <span class="price">{{goodsItem.price}}</span>
@@ -18,6 +18,17 @@
           return {};
         }
 
+      }
+    },
+    methods:{
+      imgLoad(){
+        console.log("图片加载完成");
+        //如何拿到scroll对象，用事件总线$bus
+        // 1用父子组件通信可以拿到
+        // 2用vuex方式可以拿到
+        // 3用事件总线$bus
+        //发射一个事件！！！，然后在Home.vue中监听
+          this.$bus.$emit("itemImageLoad")
       }
     }
   }

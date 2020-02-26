@@ -104,10 +104,17 @@
       this.GetGoodsData("news");
       this.GetGoodsData("sells");
 
-
+    },
+    mounted() {
+      //监听从goodsListItem.vue中发送的事件！！！！用于修改scroll下拉加载的bug
+      //默认情况下$bus是没有的！！！是空的，
+      //我们需要在main.js中Vue.prototype.$bus=new Vue()就可以
+      this.$bus.$on("itemImageLoad",()=>{
+        this.$refs.scroll.refresh()
+      })
     }
     , methods: {
-      //下拉加载更多
+      //下拉加载更多,这种方式是有bug的
       loadMore(){
         this.GetGoodsData(this.currentType)
       },

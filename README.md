@@ -96,3 +96,19 @@ scrollTo(0,0,500ms)方法回到指定地方
         this.scroll.refresh()
         //页面加载一次要结束一次，否自只能加载一次
         this.scroll.finishPullUp()
+##上拉加载更多bug
+better-scroll在决定有多少区域可以滚动时，是根据scrollerHeight属性决定
+当图片没有加载的时候，他会按没有加载图片的height算滚动距离，scrollerHight此时没有变化，也不刷新，当图片加载出来的时候，高度远远大于未加载的高度，此时高度并没有重刷新！！！所以在刷新的时候，会出现卡顿不流畅的情况甚至出现滑不下去的情况，此时我们应该重新加载我们的scrollerHight!!!!
+##如何解决加载bug!!!
+1监听没涨图片是否加载完成，只要有一张图片加载完成，就执行refresh!!!!
+2如何监听图片加载完成
+js  img.onload=function(){}
+vue @load图片加载完成
+
+在GoodsListLitem.vue中 3-23行
+
+但是又有一个问题！！！！
+就是我们如何拿到scroll对象！！！！！goodsListItem是拿不到scroll,但是首页home.vue能拿到！！但是拿到了又如何和GoodsListLitem通信！！
+
+
+1事件总线$bus
