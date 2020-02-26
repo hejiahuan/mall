@@ -5,7 +5,7 @@
       <div slot="center">购物街</div>
       <div slot="right">右边</div>
     </nav-bar>
-    <tab-control :titles="titles" class="tabControlTop" @tabClick="tabClick" ref="tabControl" v-show="isTabFixed"/>
+    <tab-control :titles="titles" class="tabControlTop" @tabClick="tabClick" ref="tabControl1" v-show="isTabFixed"/>
 
     <!--把除了上边的home-nav其他都加入scroll中，这些就可以局部滚动了-->
 
@@ -22,7 +22,7 @@
       <!--Tab Control-->
       <!--简单用css属性做一个栏目吸顶position: sticky;-->
       <!--tabControl在内部点击，然后将内部点击事件传入外部home-->
-      <tab-control :titles="titles" @tabClick="tabClick" ref="tabControl"/>
+      <tab-control :titles="titles" @tabClick="tabClick" ref="tabControl2"/>
 
       <!--商品数据展示-->
       <!--觉得goods[currentType]太长了计算属性一下-->
@@ -142,7 +142,7 @@
       //监听轮播图是否加载完，然后在计算offsetTop
    // 监听图片是否加载完成并且得到正确的offsetTop
       swiperImageLoad(){
-        this.tabOffsetTop=this.$refs.tabControl.$el.offsetTop
+        this.tabOffsetTop=this.$refs.tabControl2.$el.offsetTop
       },
 
 
@@ -209,6 +209,8 @@
             this.currentType = "sells"
             break
         }
+        this.$refs.tabControl1.currentIndex=index;
+        this.$refs.tabControl2.currentIndex=index;
       },
 
 
