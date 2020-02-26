@@ -82,6 +82,8 @@
 
       refresh(){
         //这么写为了防bug
+
+        console.log("打印测试防抖动");
         this.scroll&&this.scroll.refresh&&this.scroll.refresh()
       }
 

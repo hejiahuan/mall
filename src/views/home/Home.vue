@@ -10,7 +10,8 @@
 
     <!--用ref把组件加入$refs中，这样就可以拿到scroll组件对象了！！！-->
     <!--probe-type为啥是3那是因为我们传个3，不是所有功能需要实时监听，不传就是不监听-->
-    <Scroll class="content" ref="scroll" :probe-type="3" @scroll="contentScroll" :pull-up-load="true" @pullingUp="loadMore">
+    <Scroll class="content" ref="scroll" :probe-type="3" @scroll="contentScroll" :pull-up-load="true"
+            @pullingUp="loadMore">
       <!--轮播图-->
       <home-swiper :banners="banners"></home-swiper>
       <!--做下面的推荐--->
@@ -76,7 +77,7 @@
 
         },
         currentType: "pop",
-        isShow:false
+        isShow: false
       }
 
     },
@@ -109,13 +110,41 @@
       //监听从goodsListItem.vue中发送的事件！！！！用于修改scroll下拉加载的bug
       //默认情况下$bus是没有的！！！是空的，
       //我们需要在main.js中Vue.prototype.$bus=new Vue()就可以
-      this.$bus.$on("itemImageLoad",()=>{
-        this.$refs.scroll.refresh()
+
+      //防抖动函数
+      const refresh = this.debounce(this.$refs.scroll.refresh, 500)
+
+      this.$bus.$on("itemImageLoad", () => {
+
+        refresh()
+
       })
-    }
-    , methods: {
+    },
+    methods: {
+      // 封装一个防抖函数
+      // 原理就是定时器
+      //过程:
+      // 如果直接执行Refresh,refresh函数会执行10次，因为一页显示10个
+      // 可以将refresh函数传入到debounce函数中，生成一个新的函数
+      //这里的func= this.$refs.scroll.refresh注意这里refresh是传入一个函数不带括号！！！！带括号等于把结果值传入了
+      // const refresh=debounce(this.$refs.scroll.refresh,500)
+      // refresh()====>相当于执行了return function(...args)函数
+
+      debounce(func, delay) {
+        let timer = null
+        return function (...args) {
+          if (timer) clearTimeout(timer)
+          timer = setTimeout(() => {
+            //执行
+            func.apply(this, args)
+          }, delay)
+
+        }
+      }
+      ,
+
       //下拉加载更多,这种方式是有bug的
-      loadMore(){
+      loadMore() {
         this.GetGoodsData(this.currentType)
       },
 
@@ -130,10 +159,10 @@
 
       //监听位置postition,这个方法为了做topBack的隐藏和消失
       // 因为你要什么时候隐藏和消失，必须得知道位置
-      contentScroll(postion){
+      contentScroll(postion) {
         // 这个是有scroll传入给home父组件的
         //如果postion大于1000，显示出来topBack
-       this.isShow= (-postion.y)>1000
+        this.isShow = (-postion.y) > 1000
       },
 
       /***
@@ -182,7 +211,6 @@
         })
       }
     }
-
   }
 </script>
 
@@ -232,9 +260,9 @@
   }
 
   /*.content {*/
-    /*height: calc(100% - 93px);*/
-    /*overflow: hidden;*/
-    /*margin-top: 44px;*/
+  /*height: calc(100% - 93px);*/
+  /*overflow: hidden;*/
+  /*margin-top: 44px;*/
   /*}*/
 
 </style>
