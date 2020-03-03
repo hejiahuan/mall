@@ -235,4 +235,4 @@ deactivated(){
 1跳转的时候如果跳转
 this.$router.push()
 2跳转的时候带id
-  1动态路由 /xxx:id
+  1动态路由 /xxx/:id

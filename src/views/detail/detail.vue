@@ -1,22 +1,27 @@
 <template>
-    <div class="detail">
-      <h2>{{iid}}</h2>
-
-    </div>
+  <div class="detail">
+      <detail-nav-bar/>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "detail",
-        data(){
-          return{
-            iid:null
-          }
-        },
-        created() {
-          this.iid=this.$route.params.id;
-        }
+
+  import DetailNavBar from "./childComps/DetailNavBar"
+
+  export default {
+    name: "detail",
+    data() {
+      return {
+        iid: null
+      }
+    },
+    components:{
+      DetailNavBar
+    },
+    created() {
+      this.iid = this.$route.params.id;
     }
+  }
 </script>
 
 <style scoped>
