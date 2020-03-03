@@ -230,3 +230,9 @@ activeated(){
 deactivated(){
 
 }
+
+####当点击首页单品的时候跳转到详情页
+1跳转的时候如果跳转
+this.$router.push()
+2跳转的时候带id
+  1动态路由 /xxx:id

@@ -9,7 +9,7 @@ const Home = () => import('views/home/Home')
 const Category = () => import('views/category/Category')
 const Cart = () => import('views/cart/Cart')
 const Profile = () => import('views/profile/Profile')
-
+const Detail =()=>import(`views/detail/detail`)
 
 const routes = [
 
@@ -32,7 +32,15 @@ const routes = [
   {
     path: '/profile',
     component: Profile
+  },
+  {
+    //传递参数有2种
+    // 1动态路由:id
+    // 2push（query）
+    path:`/detail/:id`,
+    component:Detail
   }
+
 
 ]
 

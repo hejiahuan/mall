@@ -1,5 +1,5 @@
 <template>
-  <div class="goods-item">
+  <div class="goods-item" @click="itemClick">
     <img :src="goodsItem.image" alt="" @load="imgLoad">
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
@@ -29,6 +29,11 @@
         // 3用事件总线$bus
         //发射一个事件！！！，然后在Home.vue中监听
           this.$bus.$emit("itemImageLoad")
+      },
+
+      itemClick(){
+        //路由的跳转,这块用的是动态路由跳转没有用query跳转
+        this.$router.push("/detail/"+this.goodsItem.id)
       }
     }
   }
