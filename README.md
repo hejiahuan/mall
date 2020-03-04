@@ -52,7 +52,7 @@ better-scroll必须放在mounted中，mounted表示模板,el创建完毕了！�
 ##必须封装Better-scroll解耦合，不然bettr-scroll太依赖了！！
 scroll.vue
 
-##如果确定中间高度
+##如果确定中间高度(用better-scroll必须设置高度！！！！！)
 [!55.jpg](55.JPG)
 1用定位
 .content {
@@ -267,3 +267,25 @@ position:relative;
 z-index:999
 backgroun-color:#fff
 就可以了
+
+####用better-scroll必须设置高度
+  .detail {
+    position: relative;
+    z-index: 9;
+    background-color: #fff;
+    /*//这里的父类元素是detail---100vh就是100%的视口高度*/
+    height: 100vh;
+  }
+
+  .content{
+    /*100%的高度都是相对于父类元素的*/
+    height: calc(100% - 93px);
+  }
+  
+  .nav{
+    position: relative;
+    z-index: 9;
+    background-color: #fff;
+  }
+  
+ 这里给了思路当吸顶的时候，他是透明的，可以把nav设置成relative然后z-index,这个时候他是透明的，然后设置bgc就可以了
