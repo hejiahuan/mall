@@ -261,3 +261,9 @@ export class Goods {
     this.realPrice = itemInfo.lowNowPrice
   }
 }
+####当详情页面的时候，把mainBar去掉
+思路
+position:relative;
+z-index:999
+backgroun-color:#fff
+就可以了
