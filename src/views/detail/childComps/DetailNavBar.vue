@@ -15,6 +15,8 @@
 <script>
   import NavBar from "components/common/navbar/NavBar"
 
+
+
   export default {
     name: "DetailNavBar",
     data() {
@@ -35,6 +37,9 @@
         // 或者go(-1)
         this.$router.back()
       }
+    },
+    create(){
+      //
     }
   }
 </script>

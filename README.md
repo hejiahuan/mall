@@ -236,3 +236,9 @@ deactivated(){
 this.$router.push()
 2跳转的时候带id
   1动态路由 /xxx/:id
+####做轮播图，这个要并且排除keep-alive中不需要缓存的组件
+exclude="detail"
+
+<keep-alive exclude="detail">
+      <router-view/>
+</keep-alive>
