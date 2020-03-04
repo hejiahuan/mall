@@ -242,3 +242,22 @@ exclude="detail"
 <keep-alive exclude="detail">
       <router-view/>
 </keep-alive>
+
+####数据整合
+比如我们要整合详细页面，但是详情页面数据非常复杂，而切绝对都不是一板一眼的！！！需要自己整合数据，我们要像java一样写一个类，这样封装一个类，然后传入我们该有的东西
+detail.js中
+/**
+ * es6的写法简直跟java一样一样的
+ */
+export class Goods {
+  constructor(itemInfo, columns, services) {
+    this.title = itemInfo.title
+    this.desc = itemInfo.desc
+    this.newPrice = itemInfo.price
+    this.oldPrice = itemInfo.oldPrice
+    this.discount = itemInfo.discountDesc
+    this.columns = columns
+    this.services = services
+    this.realPrice = itemInfo.lowNowPrice
+  }
+}
