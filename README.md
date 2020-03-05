@@ -289,3 +289,36 @@ backgroun-color:#fff
   }
   
  这里给了思路当吸顶的时候，他是透明的，可以把nav设置成relative然后z-index,这个时候他是透明的，然后设置bgc就可以了
+ 
+ ###如何监听图片加载完了，才调用函数
+ 思路
+ 我们可以设置一个计数器，当计数器==图片的长度的时候再执行
+ ![3.jpg](3.JPG)
+ 
+####如果将一个时间戳转成时间格式化字符串
+unix时间元年为起点，返回对应的时间戳
+时间戳:1535694719
+
+思路:
+1将时间戳转成Date对象
+const date=new Date(1535694719)
+2将Date进行格式化，转成对应的字符串
+*date.getYear()+date.getMonth()+1---->FormatString(太常用)
+直接copy网上
+
+####给goodsListLitem改造
+方法一
+用路由的方式
+
+        // 这里GoodsListLitem被两个东西用到了一个home一个Detail，那么就有一个问题
+        // 当我们图片加载完了我们betterscroll是要刷新的！不刷新的是不行的！！！
+        // 所以我们这里用的事件总线来发送全局监听事件的，那么我们这里只给home发了，并没有给Detail发！
+
+
+//   给home发
+        if(this.$route.path.indexOf("/home")){
+          this.$bus.$emit("itemImageLoad")
+        }else{
+          this.$bus.$emit("detailItemImgLoad")
+        }
+方法二

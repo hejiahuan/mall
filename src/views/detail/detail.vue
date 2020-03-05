@@ -6,6 +6,7 @@
     <better-scroll class="content">
       <detali-swiper :topImages="topImages"/>
       <detail-basic-info :goods="goods"/>
+      <goods-list :goods="recommend"/>
     </better-scroll>
   </div>
 </template>
@@ -14,7 +15,7 @@
 
   import DetailNavBar from "./childComps/DetailNavBar"
 
-  import {getDetailDatas, Goods} from "network/detail"
+  import {getDetailDatas, getRecommend, Goods} from "network/detail"
 
   import DetaliSwiper from "./childComps/DetailSwiper"
 
@@ -24,20 +25,26 @@
 
   import BetterScroll from "components/common/scroll/Scroll"
 
+  // 引入goodlist
+
+  import GoodsList from "components/content/goods/GoodsList"
+
   export default {
     name: "detail",
     data() {
       return {
         iid: null,
         topImages: [],
-        goods: {}
+        goods: {},
+        recommend:[]
       }
     },
     components: {
       DetailNavBar,
       DetaliSwiper,
       DetailBasicInfo,
-      BetterScroll
+      BetterScroll,
+      GoodsList
     },
     created() {
       this.iid = this.$route.params.id;
@@ -50,6 +57,12 @@
 
         //2获取商品的详细信息
         this.goods = new Goods(data.itemInfo, data.columns, data.shopInfo.services);
+
+
+        //3请求推荐数据
+        getRecommend().then(res => {
+           this.recommend=res.data.list
+        })
       })
     }
   }
@@ -64,12 +77,12 @@
     height: 100vh;
   }
 
-  .content{
+  .content {
     /*100%的高度都是相对于父类元素的*/
     height: calc(100% - 93px);
   }
-  
-  .nav{
+
+  .nav {
     position: relative;
     z-index: 9;
     background-color: #fff;

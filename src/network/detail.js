@@ -2,13 +2,21 @@ import {request} from "./request"
 
 export function getDetailDatas(iid) {
     return new request({
-      url:"http://localhost:7300/mock/5e4a799fc0a41e4d74184c6d/getDetailDatas",
+      url:"/getDetailDatas",
       params:{
         iid
       }
     })
 
 }
+
+export function getRecommend() {
+  return request({
+    url:"/home/goodsDatas?type=pop&page=1",
+  })
+  
+}
+
 
 /**
  * es6的写法简直跟java一样一样的

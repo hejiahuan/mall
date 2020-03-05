@@ -28,7 +28,19 @@
         // 2用vuex方式可以拿到
         // 3用事件总线$bus
         //发射一个事件！！！，然后在Home.vue中监听
+        // this.$bus.$emit("itemImageLoad")
+
+
+        // 这里GoodsListLitem被两个东西用到了一个home一个Detail，那么就有一个问题
+        // 当我们图片加载完了我们betterscroll是要刷新的！不刷新的是不行的！！！
+        // 所以我们这里用的事件总线来发送全局监听事件的，那么我们这里只给home发了，并没有给Detail发！！！
+        //   给home发
+        if(this.$route.path.indexOf("/home")){
           this.$bus.$emit("itemImageLoad")
+        }else{
+          this.$bus.$emit("detailItemImgLoad")
+        }
+
       },
 
       itemClick(){
