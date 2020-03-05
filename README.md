@@ -322,3 +322,26 @@ const date=new Date(1535694719)
           this.$bus.$emit("detailItemImgLoad")
         }
 方法二
+思路就是当我们离开Home.vue的时候，我们不是不需要这个GoodsListLitem发送的事件总线的，所以可以在home.vue中取消发送的这个事件总线
+
+this.$bus.$off("itemImgLoad,函数)
+
+
+
+//对监听的事件进行保存
+      this.ItemImgListener=() => {
+
+        refresh()
+
+      }
+
+
+this.$bus.$off("itemImgLoad,ItemImgListener)
+
+
+####当页面没有加入keep-alive缓存，那么他离开页面的时候不会调用deactivated,反而离开会调用destroyed
+https://cn.vuejs.org/v2/api/#keep-alive
+
+在 2.2.0 及其更高版本中，activated 和 deactivated 将会在 <keep-alive> 树内的所有嵌套组件中触发。
+
+####混入mixins解决代码复用的重要手段，其实跟继承一样！！！！

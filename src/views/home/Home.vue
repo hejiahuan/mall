@@ -86,7 +86,8 @@
         tabOffsetTop:0,
         //做吸顶用的
         isTabFixed:false,
-        saveY:0
+        saveY:0,
+        ItemImgListener:null
       }
 
     },
@@ -126,11 +127,15 @@
       //防抖动函数
       const refresh = debounce(this.$refs.scroll.refresh, 500)
 
-      this.$bus.$on("itemImageLoad", () => {
+
+      //对监听的事件进行保存,为了做取消事件总线
+      this.ItemImgListener=() => {
 
         refresh()
 
-      })
+      }
+
+      this.$bus.$on("itemImageLoad", this.ItemImgListener)
 
 
 
@@ -149,6 +154,10 @@
     // 离开的时候
     deactivated(){
       this.saveY=this.$refs.scroll.getScrollY()
+
+      //取消全局事件的监听
+      this.$bus.$off("itemImgLoad",this.ItemImgListener)
+
       console.log("离开页面");
     },
 

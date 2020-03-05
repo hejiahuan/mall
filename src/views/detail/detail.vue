@@ -3,7 +3,7 @@
     <detail-nav-bar class="nav"/>
 
     <!--需要滚动的东西加入-->
-    <better-scroll class="content">
+    <better-scroll class="content" ref="scroll">
       <detali-swiper :topImages="topImages"/>
       <detail-basic-info :goods="goods"/>
       <goods-list :goods="recommend"/>
@@ -29,6 +29,14 @@
 
   import GoodsList from "components/content/goods/GoodsList"
 
+
+  //导入防抖函数
+  import {debounce} from "components/common/utils"
+
+
+  //导入混入解决复用的封装
+  import {ItemListenMixins} from "components/common/mixins"
+
   export default {
     name: "detail",
     data() {
@@ -36,7 +44,9 @@
         iid: null,
         topImages: [],
         goods: {},
-        recommend:[]
+        recommend:[],
+        //这里用mixins来定义这个对象
+        // ItemImgListener:null
       }
     },
     components: {
@@ -46,6 +56,7 @@
       BetterScroll,
       GoodsList
     },
+    mixins:[ItemListenMixins],
     created() {
       this.iid = this.$route.params.id;
       // 这里请求数据在request.js中
@@ -64,6 +75,39 @@
            this.recommend=res.data.list
         })
       })
+    },
+
+    //这里用mixins来定义这个对象,请看mixins.js
+    // mounted() {
+    //   //防抖动函数
+    //   const newrefresh = debounce(this.$refs.scroll.refresh, 500)
+    //   //这里用了第二种方法来监听GoodsListItem图片加载完了，然后发送给Detail让他来刷新
+    //   this.ItemImgListener=()=>{
+    //     newrefresh()
+    //   }
+    //
+    //   this.$bus.$on("itemImageLoad", this.ItemImgListener)
+    // },
+
+    //这里deactivated是用不了的，没有做缓存的话离开他应该是调用的destroyed
+    deactivated() {
+    // <div id="app">
+    //     <keep-alive exclude="detail">
+    //     <router-view/>
+    //     </keep-alive>
+    //     <main-tab-bar/>
+    //
+    //     </div>
+    //   我们detail没有加缓存
+      //这里deactivated是用不了的，没有做缓存的话离开他应该是调用的dest
+      console.log("deactivated");
+    },
+    destroyed() {
+      console.log("记住在没有keep-alive的加缓存的页面里，deactivated不存在离开，只能调用destroyed()方法，因为deactivated在keep-alive中是特有的");
+      //取消全局事件的监听
+      this.$bus.$off("itemImgLoad",this.ItemImgListener)
+
+      console.log("离开页面");
     }
   }
 </script>
