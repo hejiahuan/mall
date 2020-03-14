@@ -238,6 +238,8 @@
             this.currentType = "sells"
             break
         }
+
+        //让2个tanControll保持一致！！不然Current不一致了
         this.$refs.tabControl1.currentIndex=index;
         this.$refs.tabControl2.currentIndex=index;
       },

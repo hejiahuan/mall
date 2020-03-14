@@ -345,3 +345,50 @@ https://cn.vuejs.org/v2/api/#keep-alive
 在 2.2.0 及其更高版本中，activated 和 deactivated 将会在 <keep-alive> 树内的所有嵌套组件中触发。
 
 ####混入mixins解决代码复用的重要手段，其实跟继承一样！！！！
+
+###解决详情页滚动的时候突然不能滚动的情况！！！
+
+就是跟home.vue中的一样，当我们向下拉的时候，有的时候突然拉不下去，但是过一会儿又能拉了
+原因：是因为betterscroll高度----于下拉的高度不一致，比如betterscroll高度是100
+现在高度是1500,这个时候重新计算高度，怎么计算高度呢，就是重新让betterscroll刷新，在图片加载的时候刷新
+
+this.$refs.scroll.refresh()
+
+
+但是加载完一张照片，就要刷新一次，频率有点高哦。就要加入防抖哦
+
+####对应联动效果(一般拿offsetTop只要值不对，100%是图片加载没完成！！！所以一般都在图片加载完成后拿到offsetTop)
+1点击标题滚动到指定位置(关键是得到offsetTop 在图片加载完后得到)
+![1.jpg](1.jpg)
+
+如何做防抖（只会执行一次）
+1就是在props:中设置一个值为null
+data(){
+  return {
+     //做防抖函数用
+            getThemeTopY: null
+  }
+}
+
+2在create函数中初始化
+created(){
+
+     // 4做防抖函数给getTopy赋值
+          this.getThemeTopY = debounce(() => {
+            this.themeTopYs = []
+            this.themeTopYs.push(0),
+              this.themeTopYs.push(this.$refs.detailParams.$el.offsetTop),
+              this.themeTopYs.push(this.$refs.detailComment.$el.offsetTop),
+              this.themeTopYs.push(this.$refs.goodsList.$el.offsetTop)
+            console.log(this.themeTopYs)
+          })
+
+}
+
+
+3调用函数
+        this.getThemeTopY()
+
+
+2滚动内容显示对应标题(监听滚动)
+

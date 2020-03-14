@@ -32,6 +32,10 @@
       titleClick(index){
         this.currentIndex=index;
 
+        //监听事件点击做联动效果
+        this.$emit("titleCLick",index);
+
+
       },
       backClick(){
         // 或者go(-1)
