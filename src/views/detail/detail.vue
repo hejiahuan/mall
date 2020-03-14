@@ -3,7 +3,7 @@
     <detail-nav-bar class="nav" @titleCLick="titleCLick"/>
 
     <!--需要滚动的东西加入-->
-    <better-scroll class="content" ref="scroll">
+    <better-scroll class="content" ref="scroll" @scroll="contentScroll" :probeType="3">
       <detali-swiper :topImages="topImages"/>
       <detail-basic-info :goods="goods"/>
       <detail-param-info ref="detailParams"/>
@@ -60,6 +60,35 @@
         getThemeTopY: null
       }
     },
+    created() {
+      this.iid = this.$route.params.id;
+      // 这里请求数据在request.js中
+
+      getDetailDatas(this.iid).then(res => {
+        const data = res.data.list[0];
+        //1获取顶部的图片轮播数据
+        this.topImages = data.topImage;
+
+        //2获取商品的详细信息
+        this.goods = new Goods(data.itemInfo, data.columns, data.shopInfo.services);
+
+
+        //3请求推荐数据
+        getRecommend().then(res => {
+          this.recommend = res.data.list
+        })
+      })
+
+      // 4做防抖函数给getTopy赋值
+      this.getThemeTopY = debounce(() => {
+        this.themeTopYs = []
+        this.themeTopYs.push(0),
+          this.themeTopYs.push(this.$refs.detailParams.$el.offsetTop),
+          this.themeTopYs.push(this.$refs.detailComment.$el.offsetTop),
+          this.themeTopYs.push(this.$refs.goodsList.$el.offsetTop)
+
+      })
+    },
     methods: {
       titleCLick(index) {
         this.$refs.scroll.scrollTo(0, -this.themeTopYs[index])
@@ -80,9 +109,15 @@
         // 1在data中设置一个值为null
         // 2在create中设置函数
         // 3调用函数
-        this.getThemeTopY()
-      }
+        this.getThemeTopY();
+      },
 
+      // 监听滚动
+
+      contentScroll(position){
+        console.log(position);
+
+      }
 
     },
     components: {
@@ -95,36 +130,6 @@
       DetailComment
     },
     mixins: [ItemListenMixins],
-    created() {
-      this.iid = this.$route.params.id;
-      // 这里请求数据在request.js中
-
-      getDetailDatas(this.iid).then(res => {
-        const data = res.data.list[0];
-        //1获取顶部的图片轮播数据
-        this.topImages = data.topImage;
-
-        //2获取商品的详细信息
-        this.goods = new Goods(data.itemInfo, data.columns, data.shopInfo.services);
-
-
-        //3请求推荐数据
-        getRecommend().then(res => {
-          this.recommend = res.data.list
-        })
-
-        // 4做防抖函数给getTopy赋值
-        this.getThemeTopY = debounce(() => {
-          this.themeTopYs = []
-          this.themeTopYs.push(0),
-            this.themeTopYs.push(this.$refs.detailParams.$el.offsetTop),
-            this.themeTopYs.push(this.$refs.detailComment.$el.offsetTop),
-            this.themeTopYs.push(this.$refs.goodsList.$el.offsetTop)
-          console.log(this.themeTopYs)
-        })
-
-      })
-    },
 
 
     updated() {
